@@ -1,0 +1,30 @@
+{
+  "name": "sine-wave",
+  "version": "1.0.0",
+  "description": "Sine Wave is a simple Discord bot that joins your voice channel and plays the 6300 Hz sine wave sound when you mention it. Inspired by the Rick Astley and Do the Mario bots.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aanthr0/sine-wave.git"
+  },
+  "keywords": [
+    "6300 Hz",
+    "sine wave",
+    "sine",
+    "6300 Hz sine wave"
+  ],
+  "author": "aanthr0",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/aanthr0/sine-wave/issues"
+  },
+  "homepage": "https://github.com/aanthr0/sine-wave#readme",
+  "dependencies": {
+    "@discordjs/opus": "^0.4.0",
+    "discord.js": "^12.5.1",
+    "sodium": "^3.0.2"
+  }
+}
