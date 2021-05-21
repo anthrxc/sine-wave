@@ -1,40 +1,45 @@
-require('dotenv').config({ path: `${process.cwd()}/src/.env`});
+require("dotenv").config({ path: `${process.cwd()}/src/.env`});
 
-const path = require('path');
-const discord = require('discord.js');
+const path = require("path");
+const { Client } = require("discord.js");
 
-const client = new discord.Client({ disableMentions: 'all' });
+const client = new Client({ disableMentions: "all" });
 
-client.on('ready', () => {
+client.on("ready", () => {
     console.clear();
-    console.log('---------------------------------------------\nSine Wave is ready to bleed people\'s ears out\n---------------------------------------------');
+    console.log("---------------------------------------------\nSine Wave is ready to bleed people's ears out\n---------------------------------------------");
 });
 
-client.on('voiceStateUpdate', async voice => {
-    if(!voice.channel) {
-        if(voice.id == client.user.id) {
-            if(voice.deaf) return;
-            else voice.setDeaf(true, "Self-deaf");
+client.on("voiceStateUpdate", async voice => {
+    const { channel, id, deaf, setDeaf } = voice;
+    
+    if(!channel) {
+        if(id == client.user.id) {
+            if(deaf) return;
+            else setDeaf(true, "Self-deaf");
         }
         else return;
     }
     else return;
 });
 
-client.on('message', async message => {
-    if(message.mentions.members.find(x => x.id == client.user.id)) {
-        if(message.guild.me.voice.channel || !message.member.voice.channel) return;
+client.on("message", async message => {
+    const { guild, channel, member, mentions } = message;
+    
+    if(mentions.members.find(x => x.id == client.user.id)) {
+        if(guild.me.voice.channel || !member.voice.channel) return;
         else {
-            if(message.member.voice.channel.viewable && message.member.voice.channel.joinable) {
-                const channel = message.member.voice.channel;
-                channel.join().then(
+            const voiceChannel = message.member.voice.channel;
+            if(voiceChannel.viewable && voiceChannel.joinable) {
+                
+                voiceChannel.join().then(
                     voice => {
                         voice.play(path.join(__dirname, "sine-wave.mp3"));
                     }
                 );
-                setTimeout(() => { channel.leave(); }, 32000);
+                setTimeout(() => { voiceChannel.leave(); }, 32000);
             }
-            else return;
+            else channel.send("nah");
         }
     }
     else return;
